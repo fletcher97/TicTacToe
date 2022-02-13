@@ -1,1 +1,7 @@
-*.o\n*.d\n.vscode\na.out\n.DS_Store\nbin/\n*.ignore
+*.o
+*.d
+.vscode
+a.out
+.DS_Store
+bin/
+*.ignore
