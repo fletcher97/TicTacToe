@@ -6,13 +6,12 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:01 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 02:32:13 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 04:12:53 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "board.h"
 #include "input.h"
@@ -88,7 +87,7 @@ playerInput(char player, int i, int quad, board_t *game) {
 	int ret = scanf("%d", &d);
 	if (ret == EOF) {
 		printf("Game closed.\n");
-		exit(1);
+		return -2;
 	}
 	while(getchar() != '\n');
 	if (ret == 0 || d < 1 || d > 9)
