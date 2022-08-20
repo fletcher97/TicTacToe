@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:44:04 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 04:48:17 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ parse_args(int ac, char *av[]) {
 	return true;
 }
 
-char *
+int
 askInput(char player, int type, int quad, board_t *game) {
-	char *ret;
+	int ret;
 	do
 		drawBoard(game);
 	while ((ret = getInput(player, type, quad, game)) == -1); // Asking input untill success
@@ -97,8 +97,10 @@ main(int ac, char *av[]) {
 				exit(-1);
 			}
 		} while (!play(game, quad, sub, player)); // Play untill success
-		if (game->winner != EMPTY)
+		if (game->winner != EMPTY) {
+			drawBoard(game);
 			break ;
+		}
 		if (game->global[sub] != EMPTY) {
 			while (game->global[sub] != EMPTY){
 				sub = askInput(player, INPUT_OPP, quad, game);
