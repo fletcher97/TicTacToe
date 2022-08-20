@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:33:40 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 04:44:04 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ main(int ac, char *av[]) {
 	int quad = -1, sub = -1;
 	char player = FIRST;
 
-	sub = askInput(player, 3, -1, game);
+	sub = askInput(player, INPUT_START, -1, game);
 	while (game->winner == EMPTY) {
 		game->next_quad = sub;
 		quad = sub;
 		do {
-			sub = askInput(player, 1, quad, game);
+			sub = askInput(player, INPUT_PLAY, quad, game);
 			if (sub == -2) {
 				fclose(log);
 				destroy(game);
@@ -101,7 +101,7 @@ main(int ac, char *av[]) {
 			break ;
 		if (game->global[sub] != EMPTY) {
 			while (game->global[sub] != EMPTY){
-				sub = askInput(player, 2, quad, game);
+				sub = askInput(player, INPUT_OPP, quad, game);
 			}
 			fprintf(log, "%c:%d\n", player, sub);
 			fflush(log);

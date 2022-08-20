@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:01 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:12:53 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 04:43:29 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ setInoutFunction2 (getInputFunc f) {
 int
 firstInput(char player, int i, int quad, board_t *game) {
 	(void) player;
-	if (i == 1) {
+	if (i == INPUT_PLAY) {
 		for (int j = 0; j < 9; j++)
 			if (game->board[quad][j] == EMPTY)
 				return j;
-	} else if (i == 2) {
+	} else if (i == INPUT_OPP) {
 		for (int j = 0; j < 9; j++)
 			if (game->global[j] == EMPTY)
 				return j;
-	} else if (i == 3)
+	} else if (i == INPUT_START)
 		return 0;
 	return -1;
 }
@@ -55,16 +55,16 @@ nextInput(char player, int i, int quad, board_t *game) {
 	static int next = -1;
 	next = (next + 1) % 9;
 
-	if (i == 1) {
+	if (i == INPUT_PLAY) {
 		while (game->board[quad][next] != EMPTY) {
 			next = (next + 1) % 9;
 		}
-	} else if (i == 2) {
+	} else if (i == INPUT_OPP) {
 		while (game->global[next] != EMPTY) {
 			next = (next + 1) % 9;
 		}
 		return next;
-	} else if (i == 3) {
+	} else if (i == INPUT_START) {
 		return next;
 	}
 
@@ -78,11 +78,11 @@ playerInput(char player, int i, int quad, board_t *game) {
 	int d;
 
 	(void) game;
-	if (i == 1)
+	if (i == INPUT_PLAY)
 		printf("Player \'%c\', you are on %d. Enter an index for your play (1-9):", player, quad + 1);
-	else if (i == 2)
+	else if (i == INPUT_OPP)
 		printf("Player \'%c\', enter an index for your opponnent (1-9):", player);
-	else if (i == 3)
+	else if (i == INPUT_START)
 		printf("Player \'%c\', enter a quadrant to start the game in (1-9):", player);
 	int ret = scanf("%d", &d);
 	if (ret == EOF) {
