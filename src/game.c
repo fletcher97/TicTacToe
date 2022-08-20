@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 02:35:30 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 03:07:49 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ play(board_t *board, int quadrant, int subQuadrant, char player) {
 	}
 	board->board[quadrant][subQuadrant] = player;
 	updateGlobal(board, quadrant, subQuadrant, player);
+	board->prev_move = board->last_move;
+	board->last_move = (quadrant << 4) | subQuadrant;
 	drawBoard(board);
 	return true;
 }

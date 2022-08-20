@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:13:31 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 01:52:04 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 02:44:32 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define NEXT(x) x = (x == O ? X : O)
 
 typedef struct board_s {
+	char prev_move;
+	char last_move;
 	char board[9][9];
 	char global[9];
 	char winner;
