@@ -6,12 +6,13 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:01 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 16:02:19 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:25:41 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "board.h"
 #include "input.h"
@@ -21,7 +22,7 @@ static getInputFunc getInputFunc2 = &playerInput;
 
 static FILE *replay_file = NULL;
 
-static int delay;
+static int delay = 200;
 
 void
 setReplayFile (char *file) {
@@ -43,6 +44,48 @@ setInoutFunction1 (getInputFunc f) {
 void
 setInoutFunction2 (getInputFunc f) {
 	getInputFunc2 = f;
+}
+
+int
+randomInput(char player, int i, int quad, board_t *game) {
+	int choice;
+	int count = 0;
+
+	(void) player;
+	(void) i;
+	(void) quad;
+	(void) game;
+	if (i == INPUT_START)
+		return rand() % 9;
+	if (i == INPUT_PLAY) {
+		for (int j = 0; j < 9; j++)
+			if (game->board[quad][j] == EMPTY)
+				count++;
+		choice = rand() % count;
+		for (int j = 0; j < 9; j++) {
+			if (choice && game->board[quad][j] == EMPTY)
+				choice--;
+			else if (!choice && game->board[quad][j] == EMPTY) {
+				choice = j;
+				break;
+			}
+		}
+	} else {
+		for (int j = 0; j < 9; j++)
+			if (game->global[j] == EMPTY)
+				count++;
+		choice = rand() % count;
+		for (int j = 0; j < 9; j++) {
+			if (choice && game->global[j] == EMPTY)
+				choice--;
+			else if (!choice && game->global[j] == EMPTY) {
+				choice = j;
+				break;
+			}
+		}
+	}
+	usleep(delay * 1000);
+	return choice;
 }
 
 int

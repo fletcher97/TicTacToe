@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 04:45:06 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 13:52:20 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:08:16 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int playerInput(char player, int i, int quad, board_t *game);
 int firstInput(char player, int i, int quad, board_t *game);
 int nextInput(char player, int i, int quad, board_t *game);
 int replayInput(char player, int i, int quad, board_t *game);
+int randomInput(char player, int i, int quad, board_t *game);
 
 int getInput(char player, int i, int quad, board_t *game);
 

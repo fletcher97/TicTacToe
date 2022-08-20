@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 16:01:05 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:14:51 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "board.h"
 #include "draw.h"
@@ -49,6 +50,8 @@ setInput(void (*f)(getInputFunc f), char *type) {
 		f(&nextInput);
 	else if (!strcmp(type, "replay"))
 		f(&replayInput);
+	else if (!strcmp(type, "random"))
+		f(&randomInput);
 	else
 		return false;
 	return true;
@@ -57,6 +60,7 @@ setInput(void (*f)(getInputFunc f), char *type) {
 bool
 parse_args(int ac, char *av[]) {
 	setReplayFile(log_file);
+	srand(time(NULL));
 	for (int i = 1; i < ac; i++) {
 		if (!strcmp(av[i], "-p1") && i+1 < ac) {
 			if (!setInput(&setInoutFunction1, av[++i]))
@@ -74,6 +78,9 @@ parse_args(int ac, char *av[]) {
 			int d = (int)strtol(av[++i], NULL, 10);
 			if (d >= 0)
 				setDelay(d);
+		} else if (!strcmp(av[i], "-seed") && i+1 < ac) {
+			int d = (int)strtol(av[++i], NULL, 10);
+			srand(d);
 		} else {
 			printf("Error: unrecognizable parameter '%s'\n", av[i]);
 			return false;
