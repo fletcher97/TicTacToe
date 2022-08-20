@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:48:17 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:01:05 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ play(board_t *board, int quadrant, int subQuadrant, char player) {
 	if (board->board[quadrant][subQuadrant] != EMPTY) {
 		return false;
 	}
-	fprintf(log, "%c:%d-%d\n", player, quadrant, subQuadrant);
-	fflush(log);
+	if (log_file) {
+		fprintf(log, "%c:%d-%d\n", player, quadrant, subQuadrant);
+		fflush(log);
+	}
 	board->board[quadrant][subQuadrant] = player;
 	updateGlobal(board, quadrant, subQuadrant, player);
 	board->prev_move = board->last_move;
@@ -45,6 +47,8 @@ setInput(void (*f)(getInputFunc f), char *type) {
 		f(&firstInput);
 	else if (!strcmp(type, "next"))
 		f(&nextInput);
+	else if (!strcmp(type, "replay"))
+		f(&replayInput);
 	else
 		return false;
 	return true;
@@ -52,6 +56,7 @@ setInput(void (*f)(getInputFunc f), char *type) {
 
 bool
 parse_args(int ac, char *av[]) {
+	setReplayFile(log_file);
 	for (int i = 1; i < ac; i++) {
 		if (!strcmp(av[i], "-p1") && i+1 < ac) {
 			if (!setInput(&setInoutFunction1, av[++i]))
@@ -61,8 +66,18 @@ parse_args(int ac, char *av[]) {
 				return false;
 		} else if (!strcmp(av[i], "-log") && i+1 < ac) {
 			log_file = av[++i];
-		} else
+		} else if (!strcmp(av[i], "-no-log")) {
+			log_file = NULL;
+		} else if (!strcmp(av[i], "-replay-file") && i+1 < ac) {
+			setReplayFile(av[++i]);
+		} else if (!strcmp(av[i], "-delay") && i+1 < ac) {
+			int d = (int)strtol(av[++i], NULL, 10);
+			if (d >= 0)
+				setDelay(d);
+		} else {
+			printf("Error: unrecognizable parameter '%s'\n", av[i]);
 			return false;
+		}
 	}
 	return true;
 }
@@ -80,7 +95,8 @@ int
 main(int ac, char *av[]) {
 	if (!parse_args(ac, av))
 		return -1;
-	log = fopen(log_file, "w");
+	if (log_file)
+		log = fopen(log_file, "w");
 	board_t *game = create();
 	int quad = -1, sub = -1;
 	char player = FIRST;
@@ -92,7 +108,8 @@ main(int ac, char *av[]) {
 		do {
 			sub = askInput(player, INPUT_PLAY, quad, game);
 			if (sub == -2) {
-				fclose(log);
+				if (log_file)
+					fclose(log);
 				destroy(game);
 				exit(-1);
 			}
@@ -105,8 +122,10 @@ main(int ac, char *av[]) {
 			while (game->global[sub] != EMPTY){
 				sub = askInput(player, INPUT_OPP, quad, game);
 			}
-			fprintf(log, "%c:%d\n", player, sub);
-			fflush(log);
+			if (log_file) {
+				fprintf(log, "%c:%d\n", player, sub);
+				fflush(log);
+			}
 		}
 		NEXT(player);
 	}
@@ -115,5 +134,6 @@ main(int ac, char *av[]) {
 	else
 		printf("Congratulations to \'%c\' on winning.\n", game->winner);
 	destroy(game);
-	fclose(log);
+	if (log_file)
+		fclose(log);
 }

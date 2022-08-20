@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:01 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 06:00:05 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:02:19 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,22 @@
 
 static getInputFunc getInputFunc1 = &playerInput;
 static getInputFunc getInputFunc2 = &playerInput;
+
+static FILE *replay_file = NULL;
+
+static int delay;
+
+void
+setReplayFile (char *file) {
+	if (replay_file)
+		fclose(replay_file);
+	replay_file = fopen(file, "r");
+}
+
+void
+setDelay(int d) {
+	delay = d;
+}
 
 void
 setInoutFunction1 (getInputFunc f) {
@@ -35,7 +51,7 @@ firstInput(char player, int i, int quad, board_t *game) {
 	if (i == INPUT_PLAY) {
 		for (int j = 0; j < 9; j++)
 			if (game->board[quad][j] == EMPTY) {
-				usleep(200 * 1000);
+				usleep(delay * 1000);
 				return j;
 			}
 	} else if (i == INPUT_OPP) {
@@ -44,6 +60,41 @@ firstInput(char player, int i, int quad, board_t *game) {
 				return j;
 	} else if (i == INPUT_START)
 		return 0;
+	return -1;
+}
+
+int
+replayInput(char player, int i, int quad, board_t *game) {
+	char player_replay;
+	int quad_replay;
+	int sub_replay;
+	char line[6];
+	int success;
+
+	(void) game;
+	(void) quad;
+	success = fscanf(replay_file, "%s\n", line);
+	if (success == EOF) {
+		if (player == FIRST)
+			setInoutFunction1(&playerInput);
+		else
+			setInoutFunction2(&playerInput);
+		return -1;
+	}
+	success = sscanf(line, "%c:%d-%d\n", &player_replay, &quad_replay, &sub_replay);
+	if (i == INPUT_START && success == 3 && player == player_replay) {
+		rewind(replay_file);
+		return quad_replay;
+	}
+	if (i == INPUT_PLAY && success == 3 && player == player_replay) {
+		usleep(delay * 1000);
+		return sub_replay;
+	}
+	if (i == INPUT_OPP && success == 2 && player == player_replay) {
+		usleep(delay * 1000);
+		return quad_replay;
+	}
+
 	return -1;
 }
 
@@ -70,7 +121,7 @@ nextInput(char player, int i, int quad, board_t *game) {
 		return next;
 	}
 
-	usleep(200 * 1000);
+	usleep(delay * 1000);
 	return next;
 }
 
