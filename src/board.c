@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 01:34:12 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 16:29:57 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:50:04 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ checkGlobal(board_t *board, int quad, char player) {
 	if (board->global[quad] == EMPTY)
 		return ;
 	// Vert check
-	if (board->global[quad % 3] == board->global[quad % 3 + 3] && board->global[quad % 3 + 3] == board->global[quad % 3 + 6])
+	if (board->global[quad % 3] != D && board->global[quad % 3] == board->global[quad % 3 + 3] && board->global[quad % 3 + 3] == board->global[quad % 3 + 6])
 		board->winner = player;
 	// Horz check
-	else if (board->global[quad - quad % 3] == board->global[quad - quad % 3 + 1] && board->global[quad - quad % 3 + 1] == board->global[quad - quad % 3 + 2])
+	else if (board->global[quad - quad % 3] != D && board->global[quad - quad % 3] == board->global[quad - quad % 3 + 1] && board->global[quad - quad % 3 + 1] == board->global[quad - quad % 3 + 2])
 		board->winner = player;
 	// Diag checks
-	else if ((quad == 0 || quad == 4 || quad == 8) && board->global[0] == board->global[4] && board->global[4] == board->global[8])
+	else if ((quad == 0 || quad == 4 || quad == 8) && board->global[0] != D && board->global[0] == board->global[4] && board->global[4] == board->global[8])
 		board->winner = player;
-	else if ((quad == 2 || quad == 4 || quad == 6) && board->global[2] == board->global[4] && board->global[4] == board->global[6])
+	else if ((quad == 2 || quad == 4 || quad == 6) && board->global[2] != D && board->global[2] == board->global[4] && board->global[4] == board->global[6])
 		board->winner = player;
 	// Draw check
 	else if (board->global[0] != EMPTY && board->global[1] != EMPTY && board->global[2] != EMPTY
