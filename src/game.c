@@ -19,10 +19,13 @@
 
 bool
 play(board_t *board, int quadrant, int subQuadrant, char player) {
-	if (board->board[quadrant][subQuadrant] != EMPTY)
+	if (board->board[quadrant][subQuadrant] != EMPTY) {
+		drawBoard(board);
 		return false;
+	}
 	board->board[quadrant][subQuadrant] = player;
 	updateGlobal(board, quadrant, subQuadrant, player);
+	drawBoard(board);
 	return true;
 }
 
@@ -32,6 +35,7 @@ main() {
 	int quad = -1, sub = -1;
 	char player = O;
 
+	drawBoard(game);
 	while ((sub = getInput(player, 3, -1, game)) == -1) ; // Asking input untill success
 	while (game->winner == EMPTY) {
 		quad = sub;

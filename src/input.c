@@ -20,7 +20,7 @@ int
 getInput(char player, int i, int quad, board_t *game) {
 	int d;
 
-	drawBoard(game);
+	(void) game;
 	if (i == 1)
 		printf("Player \'%c\', you are on %d. Enter an index for your play (1-9):", player, quad + 1);
 	else if (i == 2)
