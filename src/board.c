@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 01:34:12 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 01:38:15 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 03:42:53 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ create() {
 		game->global[i] = EMPTY;
 	}
 	game->winner = EMPTY;
+	game->next_quad = -1;
 	return (game);
 }
 

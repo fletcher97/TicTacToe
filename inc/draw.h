@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 02:47:26 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 03:34:26 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
+#define YELLOW "\033[33m"
 
 void drawBoard(board_t *board);
 

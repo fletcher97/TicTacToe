@@ -6,12 +6,14 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 03:07:49 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 04:33:40 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "board.h"
 #include "draw.h"
@@ -23,7 +25,6 @@ static char *log_file = "/tmp/TicTacToe.log";
 bool
 play(board_t *board, int quadrant, int subQuadrant, char player) {
 	if (board->board[quadrant][subQuadrant] != EMPTY) {
-		drawBoard(board);
 		return false;
 	}
 	fprintf(log, "%c:%d-%d\n", player, quadrant, subQuadrant);
@@ -32,7 +33,7 @@ play(board_t *board, int quadrant, int subQuadrant, char player) {
 	updateGlobal(board, quadrant, subQuadrant, player);
 	board->prev_move = board->last_move;
 	board->last_move = (quadrant << 4) | subQuadrant;
-	drawBoard(board);
+	board->next_quad = subQuadrant;
 	return true;
 }
 
@@ -86,6 +87,7 @@ main(int ac, char *av[]) {
 
 	sub = askInput(player, 3, -1, game);
 	while (game->winner == EMPTY) {
+		game->next_quad = sub;
 		quad = sub;
 		do {
 			sub = askInput(player, 1, quad, game);
