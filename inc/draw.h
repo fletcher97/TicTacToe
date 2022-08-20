@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   board.h                                            :+:      :+:    :+:   */
+/*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 01:13:31 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 01:37:24 by fletcher         ###   ########.fr       */
+/*   Created: 2022/08/19 21:47:23 by fletcher          #+#    #+#             */
+/*   Updated: 2022/08/19 21:47:24 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BOARD_H
-# define BOARD_H
+#if !defined(DRAW_H)
+#define DRAW_H
 
-# define O 'O'
-# define X 'X'
-# define D 'D'
-# define EMPTY ' '
+#include "board.h"
 
-# define NEXT(x) x = (x == O ? X : O)
+void drawBoard(board_t *board);
 
-typedef struct board_s {
-	char board[9][9];
-	char global[9];
-	char winner;
-} board_t;
-
-board_t* create();
-void updateGlobal(board_t *board, int quadrant, int subQuadrant, int player);
-void destroy(board_t *game);
-
-
-#endif // BOARD_H
+#endif // DRAW_H
