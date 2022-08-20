@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 01:34:12 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 03:42:53 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:29:57 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ destroy(board_t *game) {
 
 void
 checkGlobal(board_t *board, int quad, char player) {
-	if (board->global[quad] != player)
+	if (board->global[quad] == EMPTY)
 		return ;
 	// Vert check
 	if (board->global[quad % 3] == board->global[quad % 3 + 3] && board->global[quad % 3 + 3] == board->global[quad % 3 + 6])
@@ -65,26 +65,23 @@ updateGlobal(board_t *board, int quadrant, int subQuadrant, int player) {
 	// Vert check
 	if (board->board[quadrant][subQuadrant % 3] == board->board[quadrant][subQuadrant % 3 + 3] && board->board[quadrant][subQuadrant % 3 + 3] == board->board[quadrant][subQuadrant % 3 + 6]) {
 		board->global[quadrant] = player;
-		checkGlobal(board, quadrant, player);
 	}
 	// Horz check
 	else if (board->board[quadrant][subQuadrant - subQuadrant % 3] == board->board[quadrant][subQuadrant - subQuadrant % 3 + 1]
 		&& board->board[quadrant][subQuadrant - subQuadrant % 3] == board->board[quadrant][subQuadrant - subQuadrant % 3 + 2]) {
 		board->global[quadrant] = player;
-		checkGlobal(board, quadrant, player);
 	}
 	// Diag checks
 	else if ((subQuadrant == 0 || subQuadrant == 4 || subQuadrant == 8) && board->board[quadrant][0] == board->board[quadrant][4] && board->board[quadrant][4] == board->board[quadrant][8]) {
 		board->global[quadrant] = player;
-		checkGlobal(board, quadrant, player);
 	}
 	else if ((subQuadrant == 2 || subQuadrant == 4 || subQuadrant == 6) && board->board[quadrant][2] == board->board[quadrant][4] && board->board[quadrant][4] == board->board[quadrant][6]) {
 		board->global[quadrant] = player;
-		checkGlobal(board, quadrant, player);
 	}
 	// Draw check
 	else if (board->board[quadrant][0] != EMPTY && board->board[quadrant][1] != EMPTY && board->board[quadrant][2] != EMPTY
 		&& board->board[quadrant][3] != EMPTY && board->board[quadrant][4] != EMPTY && board->board[quadrant][5] != EMPTY
 		&& board->board[quadrant][6] != EMPTY && board->board[quadrant][7] != EMPTY && board->board[quadrant][8] != EMPTY)
 		board->global[quadrant] = D;
+	checkGlobal(board, quadrant, player);
 }
