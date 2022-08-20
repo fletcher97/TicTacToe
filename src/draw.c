@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:04 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:59:47 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 05:22:06 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,16 @@ printBoard(int i, board_t *b, int quad) {
 	char *curr = ((quad == b->next_quad || b->winner != EMPTY) ? YELLOW : "");
 	char *end = ((b->winner != EMPTY) ? YELLOW : "");
 
+
 	if (i == 0 || i == 6)
 		printf("       ");
 	else if (i == 1 || i == 3 || i == 5)
 		printf(" %s%c"RESET"%s|"RESET"%s%c"RESET"%s|"RESET"%s%c"RESET" ",
-			((((i-1)/2)*3) == (b->last_move&0xF)) ? last : ((((i-1)/2)*3) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3],
+			((((i-1)/2)*3) == (b->last_move&0xF) && *last) ? last : ((((i-1)/2)*3) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3],
 			curr,
-			((((i-1)/2)*3+1) == (b->last_move&0xF)) ? last : ((((i-1)/2)*3+1) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3+1],
+			((((i-1)/2)*3+1) == (b->last_move&0xF) && *last) ? last : ((((i-1)/2)*3+1) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3+1],
 			curr,
-			((((i-1)/2)*3+2) == (b->last_move&0xF)) ? last : ((((i-1)/2)*3+2) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3+2]);
+			((((i-1)/2)*3+2) == (b->last_move&0xF) && *last) ? last : ((((i-1)/2)*3+2) == (b->prev_move&0xF)) ? prev : end, b->board[quad][((i-1)/2)*3+2]);
 	else if (i == 2 || i == 4)
 		printf("%s -+-+- "RESET, curr);
 }
