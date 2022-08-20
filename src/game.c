@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 01:38:54 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 02:35:30 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int
 main() {
 	board_t *game = create();
 	int quad = -1, sub = -1;
-	char player = O;
+	char player = FIRST;
+	setInoutFunction1(&playerInput);
+	setInoutFunction2(&playerInput);
 
 	drawBoard(game);
 	while ((sub = getInput(player, 3, -1, game)) == -1) ; // Asking input untill success
@@ -48,7 +50,6 @@ main() {
 			while ((sub = getInput(player, 2, quad, game)) == -1) ; // Asking input untill success
 		NEXT(player);
 	}
-	drawBoard(game);
 	if (game->winner == D)
 		printf("You ended in a draw.\n");
 	else
