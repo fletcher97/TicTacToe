@@ -31,13 +31,41 @@ play(board_t *board, int quadrant, int subQuadrant, char player) {
 	return true;
 }
 
+bool
+setInput(void (*f)(getInputFunc f), char *type) {
+	if (!strcmp(type, "player"))
+		f(&playerInput);
+	else if (!strcmp(type, "first"))
+		f(&firstInput);
+	else if (!strcmp(type, "next"))
+		f(&nextInput);
+	else
+		return false;
+	return true;
+}
+
+bool
+parse_args(int ac, char *av[]) {
+	for (int i = 1; i < ac; i++) {
+		if (!strcmp(av[i], "-p1") && i+1 < ac) {
+			if (!setInput(&setInoutFunction1, av[++i]))
+				return false;
+		} else if (!strcmp(av[i], "-p2") && i+1 < ac) {
+			if (!setInput(&setInoutFunction2, av[++i]))
+				return false;
+		} else
+			return false;
+	}
+	return true;
+}
+
 int
-main() {
+main(int ac, char *av[]) {
+	if (!parse_args(ac, av))
+		return -1;
 	board_t *game = create();
 	int quad = -1, sub = -1;
 	char player = FIRST;
-	setInoutFunction1(&playerInput);
-	setInoutFunction2(&playerInput);
 
 	drawBoard(game);
 	while ((sub = getInput(player, 3, -1, game)) == -1) ; // Asking input untill success
