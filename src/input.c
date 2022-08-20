@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 21:47:01 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 04:43:29 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/20 06:00:05 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ firstInput(char player, int i, int quad, board_t *game) {
 	(void) player;
 	if (i == INPUT_PLAY) {
 		for (int j = 0; j < 9; j++)
-			if (game->board[quad][j] == EMPTY)
+			if (game->board[quad][j] == EMPTY) {
+				usleep(200 * 1000);
 				return j;
+			}
 	} else if (i == INPUT_OPP) {
 		for (int j = 0; j < 9; j++)
 			if (game->global[j] == EMPTY)
