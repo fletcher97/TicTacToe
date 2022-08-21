@@ -63,10 +63,10 @@ parse_args(int ac, char *av[]) {
 	srand(time(NULL));
 	for (int i = 1; i < ac; i++) {
 		if (!strcmp(av[i], "-p1") && i+1 < ac) {
-			if (!setInput(&setInoutFunction1, av[++i]))
+			if (!setInput(&setInputFunction1, av[++i]))
 				return false;
 		} else if (!strcmp(av[i], "-p2") && i+1 < ac) {
-			if (!setInput(&setInoutFunction2, av[++i]))
+			if (!setInput(&setInputFunction2, av[++i]))
 				return false;
 		} else if (!strcmp(av[i], "-log") && i+1 < ac) {
 			log_file = av[++i];

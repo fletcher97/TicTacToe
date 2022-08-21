@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 04:45:06 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/20 16:08:16 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:16:33 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int randomInput(char player, int i, int quad, board_t *game);
 
 int getInput(char player, int i, int quad, board_t *game);
 
-void setInoutFunction1 (getInputFunc f);
-void setInoutFunction2 (getInputFunc f);
+void setInputFunction1 (getInputFunc f);
+void setInputFunction2 (getInputFunc f);
 void setReplayFile (char *file);
 void setDelay(int d);
 

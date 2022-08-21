@@ -37,12 +37,12 @@ setDelay(int d) {
 }
 
 void
-setInoutFunction1 (getInputFunc f) {
+setInputFunction1 (getInputFunc f) {
 	getInputFunc1 = f;
 }
 
 void
-setInoutFunction2 (getInputFunc f) {
+setInputFunction2 (getInputFunc f) {
 	getInputFunc2 = f;
 }
 
@@ -119,9 +119,9 @@ replayInput(char player, int i, int quad, board_t *game) {
 	success = fscanf(replay_file, "%s\n", line);
 	if (success == EOF) {
 		if (player == FIRST)
-			setInoutFunction1(&playerInput);
+			setInputFunction1(&playerInput);
 		else
-			setInoutFunction2(&playerInput);
+			setInPutFunction2(&playerInput);
 		return -1;
 	}
 	success = sscanf(line, "%c:%d-%d\n", &player_replay, &quad_replay, &sub_replay);
