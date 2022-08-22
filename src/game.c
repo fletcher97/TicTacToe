@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/21 16:17:05 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/08/22 15:00:01 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,14 @@
 #include "board.h"
 #include "draw.h"
 #include "input.h"
-
-static FILE *log;
-static char *log_file = "/tmp/TicTacToe.log";
+#include "log.h"
 
 bool
 play(board_t *board, int quadrant, int subQuadrant, char player) {
 	if (board->board[quadrant][subQuadrant] != EMPTY) {
 		return false;
 	}
-	if (log_file) {
-		fprintf(log, "%c:%d-%d\n", player, quadrant, subQuadrant);
-		fflush(log);
-	}
+	log_play(player, quadrant, subQuadrant);
 	board->board[quadrant][subQuadrant] = player;
 	updateGlobal(board, quadrant, subQuadrant, player);
 	board->prev_move = board->last_move;
@@ -59,7 +54,7 @@ setInput(void (*f)(getInputFunc f), char *type) {
 
 bool
 parse_args(int ac, char *av[]) {
-	setReplayFile(log_file);
+	setLogReplayFile(NULL);
 	srand(time(NULL));
 	for (int i = 1; i < ac; i++) {
 		if (!strcmp(av[i], "-p1") && i+1 < ac) {
@@ -69,11 +64,11 @@ parse_args(int ac, char *av[]) {
 			if (!setInput(&setInputFunction2, av[++i]))
 				return false;
 		} else if (!strcmp(av[i], "-log") && i+1 < ac) {
-			log_file = av[++i];
+			set_log(av[++i]);
 		} else if (!strcmp(av[i], "-no-log")) {
-			log_file = NULL;
+			set_log(NULL);
 		} else if (!strcmp(av[i], "-replay-file") && i+1 < ac) {
-			setReplayFile(av[++i]);
+			setLogReplayFile(av[++i]);
 		} else if (!strcmp(av[i], "-delay") && i+1 < ac) {
 			int d = (int)strtol(av[++i], NULL, 10);
 			if (d >= 0)
@@ -102,8 +97,7 @@ int
 main(int ac, char *av[]) {
 	if (!parse_args(ac, av))
 		return -1;
-	if (log_file)
-		log = fopen(log_file, "w");
+	open_log();
 	board_t *game = create();
 	int quad = -1, sub = -1;
 	char player = FIRST;
@@ -115,8 +109,7 @@ main(int ac, char *av[]) {
 		do {
 			sub = askInput(player, INPUT_PLAY, quad, game);
 			if (sub == -2) {
-				if (log_file)
-					fclose(log);
+				close_log();
 				destroy(game);
 				exit(-1);
 			}
@@ -129,10 +122,7 @@ main(int ac, char *av[]) {
 			while (game->global[sub] != EMPTY){
 				sub = askInput(player, INPUT_OPP, quad, game);
 			}
-			if (log_file) {
-				fprintf(log, "%c:%d\n", player, sub);
-				fflush(log);
-			}
+			log_play(player, sub, -1);
 		}
 		NEXT(player);
 	}
@@ -141,6 +131,5 @@ main(int ac, char *av[]) {
 	else
 		printf("Congratulations to \'%c\' on winning.\n", game->winner);
 	destroy(game);
-	if (log_file)
-		fclose(log);
+	close_log();
 }
