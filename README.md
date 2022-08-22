@@ -203,3 +203,34 @@ choose a playable board for the opponent.
 
 Player 'X', enter an index for your opponnent (1-9):
 ```
+
+# Usage
+
+To play the game first you'll need to compile the game using the Makefile
+provided. An executable named `TicTacToe` will be created generated. You can
+simply execute it to play 1v1 against another user.
+
+A few flags can be specified:
+
+  * `-p1 <input_methos>`/`-p2 <input_methos>`: Change the input method for
+    player 1/2.
+    * `player`: Default input method that asks the user for the cell index.
+    * `first`: Loads input method that chooses always the first possible cell to
+      play on.
+    * `next`: Loads input method that chooses always the cell who's index is one
+      higher than it's last invocation.
+    * `random`: Loads input method that chooses a random cell.
+    * `replay`: Loads input method that reads from a log file and chooses the
+      next valid play for the given player.
+  * `-log <path>`: Specify the path for the log file. Default log file is
+    located at `/tmp/TicTacToe.log`.
+  * `-no-log`: Disable logging.
+  * `-replay-file <path>`: Specify the path for the replay file. Default replay
+    file is set to the same as the default log file.
+  * `-delay <milisecond>`: Specify how long a "bot" takes to play. Defaults to
+    200 ms.
+  * `-seed <number>`: Specify seed to use for random input method. Defaults to a
+    random seed based on current time.
+
+**Warning**: If the same flag is given twice or conflicting flags are specified
+the last one will prevail and overwrite previous flags.
