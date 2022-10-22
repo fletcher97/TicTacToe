@@ -6,7 +6,7 @@
 /*   By: fletcher <fletcher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 01:12:07 by fletcher          #+#    #+#             */
-/*   Updated: 2022/08/22 15:00:01 by fletcher         ###   ########.fr       */
+/*   Updated: 2022/09/23 16:49:11 by fletcher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,41 @@
 #include "draw.h"
 #include "input.h"
 #include "log.h"
+
+void
+printHelp() {
+	printf(
+"-h/--help: print help message\n\
+\n\
+-p1 <input_methos>/-p2 <input_methos>: Change the input method for\n\
+  player 1/2.\n\
+  -> player: Default input method that asks the user for the cell index.\n\
+  -> first: Loads input method that chooses always the first possible cell to\n\
+    play on.\n\
+  -> next: Loads input method that chooses always the cell who's index is one\n\
+    higher than it's last invocation.\n\
+  -> random: Loads input method that chooses a random cell.\n\
+  -> replay: Loads input method that reads from a log file and chooses the\n\
+    next valid play for the given player.\n\
+\n\
+-log <path>: Specify the path for the log file. Default log file is\n\
+  located at /tmp/TicTacToe.log.\n\
+\n\
+-no-log: Disable logging.\n\
+\n\
+-replay-file <path>: Specify the path for the replay file. Default replay\n\
+  file is set to the same as the default log file.\n\
+\n\
+-delay <milisecond>: Specify how long a \"bot\" takes to play. Defaults to\n\
+  200 ms.\n\
+\n\
+-seed <number>: Specify seed to use for random input method. Defaults to a\n\
+  random seed based on current time.\n\
+\n\
+WARNING: If the same flag is given twice or conflicting flags are specified\n\
+the last one will prevail and overwrite previous flags.\n\
+");
+}
 
 bool
 play(board_t *board, int quadrant, int subQuadrant, char player) {
@@ -57,7 +92,10 @@ parse_args(int ac, char *av[]) {
 	setLogReplayFile(NULL);
 	srand(time(NULL));
 	for (int i = 1; i < ac; i++) {
-		if (!strcmp(av[i], "-p1") && i+1 < ac) {
+		if (!strcmp(av[i], "-h") || !strcmp(av[i], "--help")) {
+			printHelp();
+			return false;
+		} else if (!strcmp(av[i], "-p1") && i+1 < ac) {
 			if (!setInput(&setInputFunction1, av[++i]))
 				return false;
 		} else if (!strcmp(av[i], "-p2") && i+1 < ac) {
@@ -78,6 +116,7 @@ parse_args(int ac, char *av[]) {
 			srand(d);
 		} else {
 			printf("Error: unrecognizable parameter '%s'\n", av[i]);
+			printHelp();
 			return false;
 		}
 	}
