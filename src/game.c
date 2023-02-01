@@ -22,7 +22,7 @@
 #include "log.h"
 
 void
-printHelp() {
+printHelp(void) {
 	printf(
 "-h/--help: print help message\n\
 \n\

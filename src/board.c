@@ -15,7 +15,7 @@
 #include "board.h"
 
 board_t*
-create() {
+create(void) {
 	board_t *game;
 
 	game = calloc(1, sizeof(board_t));

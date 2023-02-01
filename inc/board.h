@@ -30,7 +30,7 @@ typedef struct board_s {
 	char winner;
 } board_t;
 
-board_t* create();
+board_t* create(void);
 void updateGlobal(board_t *board, int quadrant, int subQuadrant, int player);
 void destroy(board_t *game);
 

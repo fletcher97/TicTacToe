@@ -35,13 +35,13 @@ set_log(char *file) {
 }
 
 void
-open_log() {
+open_log(void) {
 	if (log_file)
 		log = fopen(log_file, "wb");
 }
 
 void
-close_log() {
+close_log(void) {
 	if (log)
 		fclose(log);
 }

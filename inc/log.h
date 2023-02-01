@@ -17,8 +17,8 @@
 
 void log_play(char player, int quadrant, int subquadrant);
 void set_log(char *file);
-void open_log();
-void close_log();
+void open_log(void);
+void close_log(void);
 void setLogReplayFile(char *file);
 
 #endif // LOG_H
