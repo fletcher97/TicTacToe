@@ -71,23 +71,6 @@ play(board_t *board, int quadrant, int subQuadrant, char player) {
 }
 
 bool
-setInput(void (*f)(getInputFunc f), char *type) {
-	if (!strcmp(type, "player"))
-		f(&playerInput);
-	else if (!strcmp(type, "first"))
-		f(&firstInput);
-	else if (!strcmp(type, "next"))
-		f(&nextInput);
-	else if (!strcmp(type, "replay"))
-		f(&replayInput);
-	else if (!strcmp(type, "random"))
-		f(&randomInput);
-	else
-		return false;
-	return true;
-}
-
-bool
 parse_args(int ac, char *av[]) {
 	setLogReplayFile(NULL);
 	srand(time(NULL));
@@ -121,15 +104,6 @@ parse_args(int ac, char *av[]) {
 		}
 	}
 	return true;
-}
-
-int
-askInput(char player, int type, int quad, board_t *game) {
-	int ret;
-	do
-		drawBoard(game);
-	while ((ret = getInput(player, type, quad, game)) == -1); // Asking input untill success
-	return ret;
 }
 
 int

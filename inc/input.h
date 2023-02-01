@@ -13,6 +13,8 @@
 #if !defined(INPUT_H)
 #define INPUT_H
 
+#include <stdbool.h>
+
 #include "board.h"
 
 #define INPUT_PLAY 1
@@ -31,9 +33,12 @@ int randomInput(char player, int i, int quad, board_t *game);
 
 int getInput(char player, int i, int quad, board_t *game);
 
+bool setInput(void (*f)(getInputFunc f), char *type);
 void setInputFunction1 (getInputFunc f);
 void setInputFunction2 (getInputFunc f);
 void setReplayFile (char *file);
 void setDelay(int d);
+
+int askInput(char player, int type, int quad, board_t *game);
 
 #endif // INPUT_H
