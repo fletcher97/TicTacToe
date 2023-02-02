@@ -76,7 +76,6 @@ parse_args(int ac, char *av[]) {
 	srand(time(NULL));
 	for (int i = 1; i < ac; i++) {
 		if (!strcmp(av[i], "-h") || !strcmp(av[i], "--help")) {
-			printHelp();
 			return false;
 		} else if (!strcmp(av[i], "-p1") && i+1 < ac) {
 			if (!setInput(&setInputFunction1, &(av[++i])))
@@ -98,8 +97,7 @@ parse_args(int ac, char *av[]) {
 			int d = (int)strtol(av[++i], NULL, 10);
 			srand(d);
 		} else {
-			printf("Error: unrecognizable parameter '%s'\n", av[i]);
-			printHelp();
+			printf("Error: wrong/unrecognizable parameter '%s'\n", av[i]);
 			return false;
 		}
 	}
@@ -108,8 +106,10 @@ parse_args(int ac, char *av[]) {
 
 int
 main(int ac, char *av[]) {
-	if (!parse_args(ac, av))
+	if (!parse_args(ac, av)) {
+		printHelp();
 		return -1;
+	}
 	open_log();
 	board_t *game = create();
 	int quad = -1, sub = -1;
