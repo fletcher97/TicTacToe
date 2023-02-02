@@ -33,7 +33,7 @@ int randomInput(char player, int i, int quad, board_t *game);
 
 int getInput(char player, int i, int quad, board_t *game);
 
-bool setInput(void (*f)(getInputFunc f), char *type);
+bool setInput(void (*f)(getInputFunc f), char **type);
 void setInputFunction1 (getInputFunc f);
 void setInputFunction2 (getInputFunc f);
 void setReplayFile (char *file);

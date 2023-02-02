@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
+
 #include "board.h"
+#include "draw.h"
 #include "input.h"
 
 static getInputFunc getInputFunc1 = &playerInput;
@@ -34,16 +37,16 @@ setInputFunction2 (getInputFunc f) {
 }
 
 bool
-setInput(void (*f)(getInputFunc f), char *type) {
-	if (!strcmp(type, "player"))
+setInput(void (*f)(getInputFunc f), char **type) {
+	if (!strcmp(*type, "player"))
 		f(&playerInput);
-	else if (!strcmp(type, "first"))
+	else if (!strcmp(*type, "first"))
 		f(&firstInput);
-	else if (!strcmp(type, "next"))
+	else if (!strcmp(*type, "next"))
 		f(&nextInput);
-	else if (!strcmp(type, "replay"))
+	else if (!strcmp(*type, "replay"))
 		f(&replayInput);
-	else if (!strcmp(type, "random"))
+	else if (!strcmp(*type, "random"))
 		f(&randomInput);
 	else
 		return false;

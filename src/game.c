@@ -79,10 +79,10 @@ parse_args(int ac, char *av[]) {
 			printHelp();
 			return false;
 		} else if (!strcmp(av[i], "-p1") && i+1 < ac) {
-			if (!setInput(&setInputFunction1, av[++i]))
+			if (!setInput(&setInputFunction1, &(av[++i])))
 				return false;
 		} else if (!strcmp(av[i], "-p2") && i+1 < ac) {
-			if (!setInput(&setInputFunction2, av[++i]))
+			if (!setInput(&setInputFunction2, &(av[++i])))
 				return false;
 		} else if (!strcmp(av[i], "-log") && i+1 < ac) {
 			set_log(av[++i]);
