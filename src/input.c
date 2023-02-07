@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <string.h>
 
 #include "board.h"
@@ -50,6 +51,8 @@ setInput(void (*f)(getInputFunc f), char **type) {
 		f(&randomInput);
 	else
 		return false;
+	if (strcmp(*type, "player"))
+		usleep(delay_g * 1000);
 	return true;
 }
 

@@ -21,7 +21,6 @@ firstInput(char player, int i, int quad, board_t *game) {
 	if (i == INPUT_PLAY) {
 		for (int j = 0; j < 9; j++)
 			if (game->board[quad][j] == EMPTY) {
-				usleep(delay_g * 1000);
 				return j;
 			}
 	} else if (i == INPUT_OPP) {

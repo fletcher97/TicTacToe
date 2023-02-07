@@ -49,11 +49,9 @@ replayInput(char player, int i, int quad, board_t *game) {
 		return quad_replay;
 	}
 	if (i == INPUT_PLAY && success == 3 && player == player_replay) {
-		usleep(delay_g * 1000);
 		return sub_replay;
 	}
 	if (i == INPUT_OPP && success == 2 && player == player_replay) {
-		usleep(delay_g * 1000);
 		return quad_replay;
 	}
 

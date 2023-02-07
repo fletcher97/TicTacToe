@@ -38,6 +38,5 @@ nextInput(char player, int i, int quad, board_t *game) {
 		return next;
 	}
 
-	usleep(delay_g * 1000);
 	return next;
 }

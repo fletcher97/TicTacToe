@@ -54,6 +54,5 @@ randomInput(char player, int i, int quad, board_t *game) {
 			}
 		}
 	}
-	usleep(delay_g * 1000);
 	return choice;
 }
