@@ -15,35 +15,35 @@
 #include "input.h"
 #include "log.h"
 
-static FILE *log = NULL;
-static char *log_file = DEFAULT_LOG;
+static FILE *log_file = NULL;
+static char *log_file_name = DEFAULT_LOG;
 
 void
 log_play(char player, int quadrant, int subquadrant) {
-	if (!log)
+	if (!log_file)
 		return;
 	if (subquadrant == -1)
-		fprintf(log, "%c:%d\n", player, quadrant);
+		fprintf(log_file, "%c:%d\n", player, quadrant);
 	else
-		fprintf(log, "%c:%d-%d\n", player, quadrant, subquadrant);
-	fflush(log);
+		fprintf(log_file, "%c:%d-%d\n", player, quadrant, subquadrant);
+	fflush(log_file);
 }
 
 void
 set_log(char *file) {
-	log_file = file;
+	log_file_name = file;
 }
 
 void
 open_log(void) {
-	if (log_file)
-		log = fopen(log_file, "wb");
+	if (log_file_name)
+		log_file = fopen(log_file_name, "wb");
 }
 
 void
 close_log(void) {
-	if (log)
-		fclose(log);
+	if (log_file)
+		fclose(log_file);
 }
 
 void
