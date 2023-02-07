@@ -80,12 +80,12 @@ parse_args(int ac, char *av[]) {
 		} else if (!strcmp(av[i], "-p1") && i+1 < ac) {
 			if (!setInput(&setInputFunction1, &(av[++i])))
 				return false;
-			if (strcmp(av[i], "load"))
+			if (!strcmp(av[i], "load"))
 				i++;
 		} else if (!strcmp(av[i], "-p2") && i+1 < ac) {
 			if (!setInput(&setInputFunction2, &(av[++i])))
 				return false;
-			if (strcmp(av[i], "load"))
+			if (!strcmp(av[i], "load"))
 				i++;
 		} else if (!strcmp(av[i], "-log") && i+1 < ac) {
 			set_log(av[++i]);
